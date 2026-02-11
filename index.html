@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Valentine Love Game ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      color: white;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 30px 25px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 0 25px rgba(0,0,0,0.2);
+      margin: auto;
+      margin-top: 12vh;
+      animation: fadeIn 1s ease;
+      position: relative;
+      z-index: 10;
+    }
+
+    h1 { font-size: 26px; }
+    p { font-size: 16px; line-height: 1.6; }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 22px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      background: white;
+      color: #ff4f81;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover { transform: scale(1.05); }
+
+    input {
+      padding: 12px;
+      width: 90%;
+      border-radius: 20px;
+      border: none;
+      outline: none;
+      margin-top: 15px;
+      font-size: 15px;
+    }
+
+    .heart {
+      font-size: 40px;
+      animation: pulse 1.2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .floating-heart {
+      position: fixed;
+      bottom: -10px;
+      font-size: 20px;
+      animation: floatUp linear infinite;
+      opacity: 0.8;
+      z-index: 1;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-110vh); opacity: 0; }
+    }
+
+    .note {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.95);
+      color: #ff4f81;
+      padding: 12px 18px;
+      border-radius: 20px;
+      font-size: 14px;
+      display: none;
+      z-index: 20;
+    }
+  </style>
+</head>
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/02/23/audio_41c7c8fd3b.mp3?filename=romantic-piano-112191.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+  <div id="screen"></div>
+</div>
+
+<div id="note" class="note"></div>
+
+<script>
+const questions = [
+  { q: "Where did we first truly connect again after our breakup?", secret: "Some love stories deserve a second chapter ❤️" },
+  { q: "What is one small thing I do that always makes you smile?", secret: "Your smile is my favorite reward 😘" },
+  { q: "What moment made you realize we should give love another chance?", secret: "Choosing us again was the best decision 💕" },
+  { q: "What do you love most about us now?", secret: "Our love is deeper and stronger ❤️" },
+  { q: "Are you ready to keep building our love story together?", secret: "Because I want forever with you, Oprah 💖" }
+];
+
+const loveNotes = [
+  "I fall in love with you every day ❤️",
+  "You are my favorite person 🌍",
+  "My heart chose you 💕",
+  "You are my peace 🏡",
+  "You are my miracle 💫"
+];
+
+let index = -1;
+const screen = document.getElementById("screen");
+const noteBox = document.getElementById("note");
+const music = document.getElementById("bgMusic");
+
+function playMusic() {
+  music.play().catch(() => {});
+}
+
+function start() {
+  playMusic();
+  index = 0;
+  showQuestion();
+}
+
+function showWelcome() {
+  screen.innerHTML = `
+    <h1>Hi Oprah ❤️</h1>
+    <p>I made this little love game just for you 💌<br>
+    Ready to play, my love?</p>
+    <div class="heart">💖</div>
+    <button onclick="start()">Start 💕</button>
+  `;
+}
+
+function showQuestion() {
+  showRandomNote();
+  const item = questions[index];
+  screen.innerHTML = `
+    <h1>Question ${index + 1} 💞</h1>
+    <p>${item.q}</p>
+    <input id="answer" placeholder="Type your answer here...">
+    <button onclick="reveal()">Reveal 💗</button>
+  `;
+}
+
+function reveal() {
+  showRandomNote();
+  const item = questions[index];
+  screen.innerHTML = `
+    <p>${item.secret}</p>
+    <div class="heart">❤️</div>
+    <button onclick="next()">Next 💕</button>
+  `;
+}
+
+function next() {
+  index++;
+  if (index < questions.length) showQuestion();
+  else showFinal();
+}
+
+function showFinal() {
+  screen.innerHTML = `
+    <h1>For You, Oprah 💖</h1>
+    <p>
+      Loving you again since December 2025 has been one of the most beautiful
+      gifts of my life.<br><br>
+      You are my peace, my joy, my safe place ❤️<br><br>
+      Happy Valentine’s Day my love 💘<br><br>
+      — Marthely
+    </p>
+    <div class="heart">💞</div>
+    <button onclick="showSecretLock()">Unlock Secret 🔐</button>
+  `;
+}
+
+function showSecretLock() {
+  screen.innerHTML = `
+    <h1>Secret Page 🔐</h1>
+    <p>Enter our secret code:</p>
+    <input id="code" placeholder="Hint: what I want with you forever 😉">
+    <button onclick="unlock()">Unlock 💖</button>
+  `;
+}
+
+function unlock() {
+  const code = document.getElementById("code").value.toLowerCase();
+  if (code.includes("forever")) {
+    screen.innerHTML = `
+      <h1>My Secret Promise 💍</h1>
+      <p>
+        Oprah,<br><br>
+        My heart is yours. My future is yours.<br>
+        I want to build dreams, memories, and a lifetime with you ❤️<br><br>
+        Forever & always,<br>
+        — Marthely 💖
+      </p>
+      <div class="heart">💘</div>
+    `;
+  } else {
+    alert("Not quite 😘 Try again...");
+  }
+}
+
+function showRandomNote() {
+  const note = loveNotes[Math.floor(Math.random() * loveNotes.length)];
+  noteBox.innerHTML = note;
+  noteBox.style.display = "block";
+  setTimeout(() => noteBox.style.display = "none", 3000);
+}
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "floating-heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (15 + Math.random() * 25) + "px";
+  heart.style.animationDuration = (4 + Math.random() * 6) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 10000);
+}
+
+setInterval(createHeart, 300);
+showWelcome();
+</script>
+
+</body>
+</html>

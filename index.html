@@ -115,7 +115,7 @@
 
 <script>
 const questions = [
-  { q: "Where did we first truly connect again after our breakup?", secret: "Some love stories deserve a second chapter ❤️" },
+  { q: "Where did we reconnect again after years apart?", secret: "Some love stories deserve a second chapter ❤️" },
   { q: "What is one small thing I do that always makes you smile?", secret: "Your smile is my favorite reward 😘" },
   { q: "What moment made you realize we should give love another chance?", secret: "Choosing us again was the best decision 💕" },
   { q: "What do you love most about us now?", secret: "Our love is deeper and stronger ❤️" },
@@ -200,23 +200,24 @@ function showFinal() {
 function showSecretLock() {
   screen.innerHTML = `
     <h1>Secret Page 🔐</h1>
-    <p>Enter our secret code:</p>
-    <input id="code" placeholder="Hint: what I want with you forever 😉">
+    <p>Enter my phone password:</p>
+    <input id="code" type="password" placeholder="6-digit secret code 😉">
     <button onclick="unlock()">Unlock 💖</button>
   `;
 }
 
 function unlock() {
-  const code = document.getElementById("code").value.toLowerCase();
-  if (code.includes("forever")) {
+  const code = document.getElementById("code").value;
+  if (code === "715392") {
     screen.innerHTML = `
       <h1>My Secret Promise 💍</h1>
       <p>
         Oprah,<br><br>
-        My heart is yours. My future is yours.<br>
-        I want to build dreams, memories, and a lifetime with you ❤️<br><br>
+        This code unlocks my heart, just like you did ❤️<br><br>
+        I want to build dreams, memories, and a lifetime with you.
+        My future is yours, my love 💖<br><br>
         Forever & always,<br>
-        — Marthely 💖
+        — Marthely 💘
       </p>
       <div class="heart">💘</div>
     `;
